@@ -1,0 +1,180 @@
+<html>
+<head>
+	<title>Pacman</title>
+
+	<style>
+		*{
+			padding:0px;
+			margin:0px;
+		}
+		body{
+			background-color:black;
+			color:white;
+		}
+		div.row div {
+			width:20px;
+			height:20px;
+			display:inline-block;
+		}
+		div#container{
+			position:relative;
+			margin-top:15px;
+		}
+		.brick{
+			background-color: blue;
+		}
+		.empty{
+			background-color: black;
+		}
+		.coin{
+			background-color: pink;
+			border-radius:20px;
+		}
+		#pacman{
+			width:20px;
+			height:20px;
+			display:inline-block;
+			background: url('pacman.gif');
+			background-size:cover;
+			position:absolute;
+			top:0px;
+			left:24px;
+		}
+		#score{
+			position:absolute;
+			top: 0px;
+			left: 300px;
+			border: 1px solid grey;
+			width: 50px;
+			height: 40px;
+			font-size: 24px;
+			text-align:center;
+			padding: 10px;
+		}
+	</style>
+
+</head>
+<body>
+	<h2>Pacman Demo</h2>
+	<div id='container'>
+		<div id='pacman'></div>
+		<div id='maze'>
+			
+		</div>
+		<div id='score'>0</div>
+
+		<h2>Homework</h2>
+
+		<ul>
+			<li>(1 pt) Make the score show up!</li>
+			<li>(2 pts)Have the character go up/down</li>
+			<li>(2 pts)Make the maze a lot more interesting</li>
+			<li>(1 pt)Have cherry appear.  Cherry is worth 100 points.</li>
+			<li>(4 pts)Prevent the character from moving past the wall</li>
+			<li>Optional: Add any other cool features</li>
+			<li>Upload a video of your work showing your features. Do NOT upload source code and ruin the fun for others.</li>
+		</ul>
+
+	</div>
+	<script>
+	
+	var world = [
+		[0,0,0,0,0,0,0,0,0,0,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,1,0,1,0,1,1,1,1,1,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,1,0,1,0,1,1,1,1,1,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,1,1,1,1,1,1,1,1,1,0],
+		[0,0,0,0,0,0,0,0,0,0,0]
+	];
+
+	var pacman = {
+		x: 0,
+		y: 1
+	}
+
+	var score = 0;
+
+	document.onkeypress= function(e){
+		//if the user pressed 'A'
+		if(e.keyCode == 97){
+			pacman.x--;
+		}
+		//if the user pressed 'D'
+		else if(e.keyCode == 100){
+			pacman.x++;
+		}
+
+		//see if the pacman is setting on top of the coin!!!
+		if(world[pacman.y][pacman.x] == 1){
+			world[pacman.y][pacman.x] = 2;
+			score += 10;
+			console.log('score is now', score);
+		}
+
+		drawPacman();
+		drawMaze();
+	}
+
+	drawMaze();
+	drawPacman();
+
+	function drawPacman()
+	{	
+		document.getElementById('pacman').style.top = pacman.y*24;
+
+		document.getElementById('pacman').style.left = pacman.x*24;
+
+	}
+
+	function drawMaze(){
+		var output = '';
+
+		for(var i=0; i<world.length; i++){
+			output += "\n<div class='row'>";
+
+			for(var j=0; j<world[i].length; j++){
+				if(world[i][j] == 0) {
+					output +="\n\t<div class='brick'></div>";
+				}
+				else if(world[i][j] == 1) {
+					output +="\n\t<div class='coin'></div>";
+				}
+				else if(world[i][j] == 2) {
+					output +="\n\t<div class='empty'></div>";
+				}
+			}
+			output +="\n</div>";
+		}
+
+		document.getElementById('maze').innerHTML = output;
+
+		// console.log('output is', output);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</script>
+
+
+</body>
+</html>
