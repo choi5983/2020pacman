@@ -1,7 +1,6 @@
 <html>
 <head>
 	<title>Pacman</title>
-
 	<style>
 		*{
 			padding:0px;
@@ -11,14 +10,20 @@
 			background-color:black;
 			color:white;
 		}
+		div.row{
+			margin:0px;
+			padding:0px;
+		}
 		div.row div {
 			width:20px;
 			height:20px;
 			display:inline-block;
 		}
-		div#container{
+		div#container, div.container{
 			position:relative;
 			margin-top:15px;
+			width:500px;
+			margin:0px auto;
 		}
 		.brick{
 			background-color: blue;
@@ -27,8 +32,8 @@
 			background-color: black;
 		}
 		.coin{
-			background-color: pink;
-			border-radius:20px;
+			background: url('coin.gif');
+			background-size: 20px;
 		}
 		#pacman{
 			width:20px;
@@ -55,7 +60,7 @@
 
 </head>
 <body>
-	<h2>Pacman Demo</h2>
+	<div class='container'><h2>Pacman Demo</h2></div>
 	<div id='container'>
 		<div id='pacman'></div>
 		<div id='maze'>
@@ -124,30 +129,28 @@
 
 	function drawPacman()
 	{	
-		document.getElementById('pacman').style.top = pacman.y*24;
-
-		document.getElementById('pacman').style.left = pacman.x*24;
-
+		document.getElementById('pacman').style.top = pacman.y*20;
+		document.getElementById('pacman').style.left = pacman.x*20;
 	}
 
 	function drawMaze(){
 		var output = '';
 
 		for(var i=0; i<world.length; i++){
-			output += "\n<div class='row'>";
+			output += "<div class='row'>";
 
 			for(var j=0; j<world[i].length; j++){
 				if(world[i][j] == 0) {
-					output +="\n\t<div class='brick'></div>";
+					output +="<div class='brick'></div>";
 				}
 				else if(world[i][j] == 1) {
-					output +="\n\t<div class='coin'></div>";
+					output +="<div class='coin'></div>";
 				}
 				else if(world[i][j] == 2) {
-					output +="\n\t<div class='empty'></div>";
+					output +="<div class='empty'></div>";
 				}
 			}
-			output +="\n</div>";
+			output +="</div>";
 		}
 
 		document.getElementById('maze').innerHTML = output;
